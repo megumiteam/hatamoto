@@ -118,7 +118,7 @@ npm install
 デフォルト値を設定するには以下のように、`defaults.json` を設置し、そのファイルを編集してください。
 
 ```
-cp ~/.grunt-init/defaults.json.sample ~/.grunt-init/defaults.json
+cp ~/.grunt-init/hatamoto/defaults.json.sample ~/.grunt-init/defaults.json
 ```
 
 ## CSS や JavaScript ファイルの minify について
