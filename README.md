@@ -171,4 +171,5 @@ composer install
 ## Contributors
 
 * [miya0001](https://github.com/miya0001)
+* [Digitalcube Co.,Ltd](https://digitalcube.jp/)
 
