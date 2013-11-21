@@ -26,13 +26,21 @@ mkdir ~/.grunt-init
 
 ### Hatamoto をインストール
 
+次にこのテンプレートを git から取得して下さい。
+
 ```
 git clone git@github.com:megumiteam/hatamoto.git ~/.grunt-init/hatamoto
 ```
 
+https を使う場合は以下のとおり。
+
+```
+git clone https://github.com/megumiteam/hatamoto.git ~/.grunt-init/hatamoto
+```
+
 ## 使い方
 
-wp-content/plugins ディレクトリ以下に、任意の名前のプラグイン用ディレクトリを作成してください。
+`wp-content/plugins` ディレクトリ以下に、任意の名前のプラグイン用ディレクトリを作成してください。
 
 ```
 mkdir wp-content/plugins/my-plugin
@@ -118,6 +126,27 @@ grunt watch
 ```
 
 watch を終了するには、キーボードで `[control]+[c]` を押して下さい。
+
+## composer について
+
+このテンプレートは、[composer](http://getcomposer.org/) にも対応しています。
+
+`composer` を使用するには、`grunt-init` 実行時に表示されるプロンプトで、`y` と答えて下さい。
+
+その後、以下のコマンドを実行しましょう。
+
+```
+composer install
+```
+
+以上で、composer.json に記述された各種のライブラリが自動的にダウンロードされ、プラグインによって `require()` されます。
+
+## 公式ディレクトリ等へ登録する際の注意
+
+* `composer` の動作環境は php5.3+ である一方で、WordPressの動作環境は php5.2+ です。`composer` を使用する際には、readme.txt に php5.3+ が動作条件である旨を書くようにしましょう。
+* 以下のファイルは公式ディレクトリに登録する際には、svn:ignore しておきましょう。
+ * node_modules
+ * composer.phar
 
 ## フィードバック
 
