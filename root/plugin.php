@@ -37,7 +37,7 @@ define('{%= prefix_caps %}_URL',  plugins_url('', __FILE__));
 define('{%= prefix_caps %}_PATH', dirname(__FILE__));
 
 ${%= prefix %} = new {%= prefix_capitalize %}();
-${%= prefix %}->init();
+${%= prefix %}->register();
 
 class {%= prefix_capitalize %} {
 
@@ -54,7 +54,7 @@ function __construct()
     $this->langs   = $data['langs'];
 }
 
-public function init()
+public function register()
 {
     add_action('plugins_loaded', array($this, 'plugins_loaded'));
     add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
