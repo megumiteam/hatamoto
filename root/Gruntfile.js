@@ -60,6 +60,9 @@ module.exports = function( grunt ) {
     {% if ('sass' === css_type) { %}
     sass:   {
       all: {
+        options: {
+          style: 'compressed'
+        },
         files: {
           'css/{%= safe_file_name %}.css': 'css/{%= safe_file_name %}.scss'
         }
