@@ -61,7 +61,7 @@ module.exports = function( grunt ) {
     sass:   {
       all: {
         options: {
-          style: 'compressed'
+          style: 'expanded'
         },
         files: {
           'css/{%= safe_file_name %}.css': 'css/{%= safe_file_name %}.scss'
