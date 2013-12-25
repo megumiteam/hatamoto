@@ -88,6 +88,6 @@ Public function wp_enqueue_scripts()
     );
 }
 
-} // end TestPlugin
+} // end class {%= prefix_capitalize %}
 
 // EOF
