@@ -10,9 +10,6 @@
 
 'use strict';
 
-require('path');
-
-
 exports.description = 'Create a WordPress plugin.';
 
 exports.notes = '';
