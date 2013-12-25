@@ -10,11 +10,17 @@
 
 'use strict';
 
+require('path');
+
+
 exports.description = 'Create a WordPress plugin.';
 
 exports.notes = '';
 exports.after = '';
 exports.warnOn = '*';
+
+var path = require('path');
+var path_name = path.basename(process.cwd());
 
 exports.template = function( grunt, init, done ) {
   init.process( {}, [
@@ -23,14 +29,16 @@ exports.template = function( grunt, init, done ) {
       name   : 'title',
       message: 'Name of the plugin.',
       default: function(value, data, done) {
-        done(null, init.defaults[this.name] || '');
+        var name = path_name.replace(/[\W]+/g, ' ').ucFirstAllWords();
+        done(null, name || '');
       }
     },
     {
       name   : 'prefix',
       message: 'PHP function prefix (alpha and underscore characters only)',
       default: function(value, data, done) {
-        done(null, init.defaults[this.name] || '');
+        var prefix = path_name.replace(/[\W]+/g, '_').toLowerCase();
+        done(null, prefix || '');
       }
     },
     {
@@ -150,10 +158,10 @@ exports.template = function( grunt, init, done ) {
     // Sanitize names where we need to for PHP/JS
     props.name = props.title.replace( /\s+/g, '-' ).toLowerCase();
     // Development prefix (i.e. to prefix PHP function names, variables)
-    props.prefix = props.prefix.replace('/[^a-z_]/i', '').toLowerCase();
+    props.prefix = props.prefix.replace(/[\W]+/g, '_').toLowerCase();
     // Development prefix in all caps (e.g. for constants)
     props.prefix_caps = props.prefix.toUpperCase();
-    props.prefix_capitalize = props.title.ucFirstAllWords().replace(/[\W_]+/g, '');
+    props.prefix_capitalize = props.title.ucFirstAllWords().replace(/[\W]+/g, '_');
     // An additional value, safe to use as a JavaScript identifier.
     props.js_safe_name = props.name.replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
     props.safe_file_name = props.name.replace(/[\W_]+/g, '-');
