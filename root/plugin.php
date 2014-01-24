@@ -57,7 +57,6 @@ function __construct()
 public function register()
 {
     add_action('plugins_loaded', array($this, 'plugins_loaded'));
-    add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
 }
 
 public function plugins_loaded()
@@ -67,9 +66,11 @@ public function plugins_loaded()
         false,
         dirname(plugin_basename(__FILE__)).$this->langs
     );
+
+    add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
 }
 
-Public function wp_enqueue_scripts()
+public function wp_enqueue_scripts()
 {
     wp_enqueue_style(
         '{%= safe_file_name %}-style',
