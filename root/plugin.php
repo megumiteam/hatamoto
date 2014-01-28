@@ -68,8 +68,76 @@ public function plugins_loaded()
     );
 
     add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
+{% if ('y' === need_admin) { %}
+    add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+    add_action('admin_menu', array($this, 'admin_menu'));
+    add_action('admin_init', array($this, 'admin_init'));
+{% } %}
+}
+{% if ('y' === need_admin) { %}
+public function admin_menu()
+{
+    add_options_page(
+        __('{%= title %}', '{%= prefix %}'),
+        __('{%= title %}', '{%= prefix %}'),
+        'manage_options', // http://codex.wordpress.org/Roles_and_Capabilities
+        '{%= prefix %}',
+        array($this, 'options_page')
+    );
 }
 
+public function admin_init()
+{
+    if (isset($_POST['{%= prefix %}']) && $_POST['{%= prefix %}']){
+        if (check_admin_referer('{%= prefix %}', '{%= prefix %}')){
+
+            // save something
+
+            wp_redirect('options-general.php?page={%= prefix %}');
+        }
+    }
+}
+
+public function options_page()
+{
+?>
+<div id="{%= prefix %}" class="wrap">
+<h2>{%= title %}</h2>
+
+<form method="post" action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>">
+<?php wp_nonce_field('{%= prefix %}', '{%= prefix %}'); ?>
+
+Admin Panel Here!
+
+<p style="margin-top: 3em;">
+    <input type="submit" name="submit" id="submit" class="button button-primary"
+            value="<?php _e("Save Changes", "{%= prefix %}"); ?>"></p>
+</form>
+</div><!-- #{%= prefix %} -->
+<?php
+}
+
+public function admin_enqueue_scripts()
+{
+    if (isset($_GET['page']) && $_GET['page'] === '{%= prefix %}') {
+        wp_enqueue_style(
+            'admin-{%= prefix %}-style',
+            plugins_url('css/admin-{%= safe_file_name %}.min.css', __FILE__),
+            array(),
+            $this->version,
+            'all'
+        );
+
+        wp_enqueue_script(
+            'admin-{%= prefix %}-script',
+            plugins_url('js/admin-{%= safe_file_name %}.min.js', __FILE__),
+            array('jquery'),
+            $this->version,
+            true
+        );
+    }
+}
+{% } %}
 public function wp_enqueue_scripts()
 {
     wp_enqueue_style(

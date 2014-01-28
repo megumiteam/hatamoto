@@ -10,7 +10,7 @@
 
 'use strict';
 
-exports.description = 'Create a WordPress plugin.';
+exports.description = 'Develop a WordPress plugin.';
 
 exports.notes = '';
 exports.after = '';
@@ -37,6 +37,12 @@ exports.template = function( grunt, init, done ) {
         var prefix = path_name.replace(/[\W]+/g, '_').toLowerCase();
         done(null, prefix || '');
       }
+    },
+    {
+      name: 'need_admin',
+      message: 'Using admin panel? "yes" or "no".',
+      validator: /^(y|n|yes|no|)$/,
+      default: 'no'
     },
     {
       name   : 'wp_version',
@@ -168,6 +174,7 @@ exports.template = function( grunt, init, done ) {
     props.js_safe_name_caps = props.js_safe_name.toUpperCase();
 
     props.use_composer = props.use_composer.charAt(0).toLowerCase();
+    props.need_admin = props.need_admin.charAt(0).toLowerCase();
 
     // Files to copy and process
 
@@ -181,6 +188,8 @@ exports.template = function( grunt, init, done ) {
       case 'l':
         delete files[ 'css/' + props.safe_file_name + '.scss'];
         delete files[ 'css/' + props.safe_file_name + '.css' ];
+        delete files[ 'css/admin-' + props.safe_file_name + '.scss'];
+        delete files[ 'css/admin-' + props.safe_file_name + '.css' ];
         props.devDependencies["grunt-contrib-less"] = "~0.5.0";
         props.css_type = 'less';
         break;
@@ -188,16 +197,28 @@ exports.template = function( grunt, init, done ) {
       case undefined:
         delete files[ 'css/' + props.safe_file_name + '.less'];
         delete files[ 'css/' + props.safe_file_name + '.scss'];
+        delete files[ 'css/admin-' + props.safe_file_name + '.less'];
+        delete files[ 'css/admin-' + props.safe_file_name + '.scss'];
         props.css_type = 'none';
         break;
       // SASS is the default
       default:
         delete files[ 'css/' + props.safe_file_name + '.less'];
         delete files[ 'css/' + props.safe_file_name + '.css' ];
+        delete files[ 'css/admin-' + props.safe_file_name + '.less'];
+        delete files[ 'css/admin-' + props.safe_file_name + '.css' ];
         props.devDependencies["grunt-contrib-sass"] = "~0.2.2";
         props.css_type = 'sass';
         break;
     }
+
+    if ( props.need_admin === 'n' ) {
+        delete files[ 'css/admin-' + props.safe_file_name + '.less'];
+        delete files[ 'css/admin-' + props.safe_file_name + '.scss' ];
+        delete files[ 'css/admin-' + props.safe_file_name + '.css' ];
+        delete files[ 'js/admin-' + props.safe_file_name + '.js' ];
+    }
+
     //console.log( files );
     // Actually copy and process files
     init.copyAndProcess( files, props );

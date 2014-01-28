@@ -3,6 +3,10 @@
 	"css/plugin.less": "css/{%= safe_file_name %}.less",
 	"css/plugin.scss": "css/{%= safe_file_name %}.scss",
 	"css/plugin.css": "css/{%= safe_file_name %}.css",
+	"css/admin.less": "css/admin-{%= safe_file_name %}.less",
+	"css/admin.scss": "css/admin-{%= safe_file_name %}.scss",
+	"css/admin.css": "css/admin-{%= safe_file_name %}.css",
 	"js/plugin.js": "js/{%= safe_file_name %}.js",
+	"js/admin.js": "js/admin-{%= safe_file_name %}.js",
 	"languages/plugin.pot": "languages/{%= prefix %}.pot"
 }

@@ -9,6 +9,7 @@ module.exports = function( grunt ) {
       all: [
         'Gruntfile.js',
         'js/{%= safe_file_name %}.js',
+        {% if ('y' === need_admin) { %}'js/admin-{%= safe_file_name %}.js',{% } %}
         'js/test/**/*.js'
       ],
       options: {
@@ -36,6 +37,9 @@ module.exports = function( grunt ) {
         files: {
           'js/{%= safe_file_name %}.min.js': [
             'js/{%= safe_file_name %}.js'
+          ],
+          'js/admin-{%= safe_file_name %}.min.js': [
+            'js/admin-{%= safe_file_name %}.js'
           ]
         },
         options: {
@@ -64,6 +68,7 @@ module.exports = function( grunt ) {
           style: 'expanded'
         },
         files: {
+          {% if ('y' === need_admin) { %}'css/admin-{%= safe_file_name %}.css': 'css/admin-{%= safe_file_name %}.scss',{% } %}
           'css/{%= safe_file_name %}.css': 'css/{%= safe_file_name %}.scss'
         }
       }
@@ -72,6 +77,7 @@ module.exports = function( grunt ) {
     less:   {
       all: {
         files: {
+          {% if ('y' === need_admin) { %}'css/admin-{%= safe_file_name %}.css': 'css/admin-{%= safe_file_name %}.less',{% } %}
           'css/{%= safe_file_name %}.css': 'css/{%= safe_file_name %}.less'
         }
       }
@@ -92,7 +98,10 @@ module.exports = function( grunt ) {
       minify: {
         expand: true,
         cwd: 'css/',
-        src: ['{%= safe_file_name %}.css'],
+        src: [
+          {% if ('y' === need_admin) { %}'admin-{%= safe_file_name %}.css',{% } %}
+          '{%= safe_file_name %}.css'
+        ],
         dest: 'css/',
         ext: '.min.css'
       }
