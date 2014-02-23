@@ -39,12 +39,6 @@ exports.template = function( grunt, init, done ) {
       }
     },
     {
-      name: 'need_admin',
-      message: 'Using admin panel? "yes" or "no".',
-      validator: /^(y|n|yes|no|)$/,
-      default: 'no'
-    },
-    {
       name   : 'wp_version',
       message: 'Version of the WordPress that your plugin requires.',
       // get the latest version number from api at wordpress.org
@@ -135,6 +129,12 @@ exports.template = function( grunt, init, done ) {
       default: function(value, data, done) {
         done(null, init.defaults[this.name] || '');
       }
+    },
+    {
+      name: 'need_admin',
+      message: 'Using admin panel? "yes" or "no".',
+      validator: /^(y|n|yes|no|)$/,
+      default: 'no'
     },
     {
       name: 'css_type',
