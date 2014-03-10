@@ -88,7 +88,7 @@ public function admin_menu()
 
 public function admin_init()
 {
-    if (isset($_POST['{%= prefix %}']) && $_POST['{%= prefix %}']){
+    if (isset($_POST['_wpnonce']) && $_POST['_wpnonce']){
         if (check_admin_referer('{%= prefix %}', '_wpnonce')){
 
             // save something
