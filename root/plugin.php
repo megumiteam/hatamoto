@@ -89,7 +89,7 @@ public function admin_menu()
 public function admin_init()
 {
     if (isset($_POST['{%= prefix %}']) && $_POST['{%= prefix %}']){
-        if (check_admin_referer('{%= prefix %}', '{%= prefix %}')){
+        if (check_admin_referer('{%= prefix %}', '_wpnonce')){
 
             // save something
 
@@ -105,7 +105,7 @@ public function options_page()
 <h2>{%= title %}</h2>
 
 <form method="post" action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>">
-<?php wp_nonce_field('{%= prefix %}', '{%= prefix %}'); ?>
+<?php wp_nonce_field('{%= prefix %}', '_wpnonce'); ?>
 
 Admin Panel Here!
 
