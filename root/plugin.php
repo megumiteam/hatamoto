@@ -12,7 +12,7 @@
  */
 
 /**
- * Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %} ({%= author_url %})
+ * Copyright (c) {%= grunt.template.today( 'yyyy' ) %} {%= author_name %} ( {%= author_url %} )
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at
@@ -29,12 +29,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-{% if ('y' === use_composer) { %}
-require(dirname(__FILE__).'/vendor/autoload.php');
+{% if ( 'y' === use_composer ) { %}
+require( dirname( __FILE__ ).'/vendor/autoload.php' );
 {% } %}
 
-define('{%= prefix_caps %}_URL',  plugins_url('', __FILE__));
-define('{%= prefix_caps %}_PATH', dirname(__FILE__));
+define( '{%= prefix_caps %}_URL',  plugins_url( '', __FILE__ ) );
+define( '{%= prefix_caps %}_PATH', dirname( __FILE__ ) );
 
 ${%= prefix %} = new {%= prefix_capitalize %}();
 ${%= prefix %}->register();
@@ -48,7 +48,7 @@ function __construct()
 {
     $data = get_file_data(
         __FILE__,
-        array('ver' => 'Version', 'langs' => 'Domain Path')
+        array( 'ver' => 'Version', 'langs' => 'Domain Path' )
     );
     $this->version = $data['ver'];
     $this->langs   = $data['langs'];
@@ -56,7 +56,7 @@ function __construct()
 
 public function register()
 {
-    add_action('plugins_loaded', array($this, 'plugins_loaded'));
+    add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 }
 
 public function plugins_loaded()
@@ -64,36 +64,36 @@ public function plugins_loaded()
     load_plugin_textdomain(
         '{%= prefix %}',
         false,
-        dirname(plugin_basename(__FILE__)).$this->langs
+        dirname( plugin_basename( __FILE__ ) ).$this->langs
     );
 
-    add_action('wp_enqueue_scripts', array($this, 'wp_enqueue_scripts'));
-{% if ('y' === need_admin) { %}
-    add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-    add_action('admin_menu', array($this, 'admin_menu'));
-    add_action('admin_init', array($this, 'admin_init'));
+    add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
+{% if ( 'y' === need_admin ) { %}
+    add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+    add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+    add_action( 'admin_init', array( $this, 'admin_init' ) );
 {% } %}
 }
-{% if ('y' === need_admin) { %}
+{% if ( 'y' === need_admin ) { %}
 public function admin_menu()
 {
     add_options_page(
-        __('{%= title %}', '{%= prefix %}'),
-        __('{%= title %}', '{%= prefix %}'),
+        __( '{%= title %}', '{%= prefix %}' ),
+        __( '{%= title %}', '{%= prefix %}' ),
         'manage_options', // http://codex.wordpress.org/Roles_and_Capabilities
         '{%= prefix %}',
-        array($this, 'options_page')
+        array( $this, 'options_page' )
     );
 }
 
 public function admin_init()
 {
-    if (isset($_POST['_wpnonce']) && $_POST['_wpnonce']){
-        if (check_admin_referer('{%= prefix %}', '_wpnonce')){
+    if ( isset( $_POST['_wpnonce'] ) && $_POST['_wpnonce'] ){
+        if ( check_admin_referer( '{%= prefix %}', '_wpnonce' ) ){
 
             // save something
 
-            wp_redirect('options-general.php?page={%= prefix %}');
+            wp_redirect( 'options-general.php?page={%= prefix %}' );
         }
     }
 }
@@ -102,16 +102,16 @@ public function options_page()
 {
 ?>
 <div id="{%= prefix %}" class="wrap">
-<h2>{%= title %}</h2>
+<h2><?php _e( '{%= title %}', '{%= prefix %}' ); ?></h2>
 
-<form method="post" action="<?php echo esc_attr($_SERVER['REQUEST_URI']); ?>">
-<?php wp_nonce_field('{%= prefix %}', '_wpnonce'); ?>
+<form method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ); ?>">
+<?php wp_nonce_field( '{%= prefix %}', '_wpnonce' ); ?>
 
 Admin Panel Here!
 
 <p style="margin-top: 3em;">
     <input type="submit" name="submit" id="submit" class="button button-primary"
-            value="<?php _e("Save Changes", "{%= prefix %}"); ?>"></p>
+            value="<?php _e( "Save Changes", "{%= prefix %}" ); ?>"></p>
 </form>
 </div><!-- #{%= prefix %} -->
 <?php
@@ -119,10 +119,10 @@ Admin Panel Here!
 
 public function admin_enqueue_scripts()
 {
-    if (isset($_GET['page']) && $_GET['page'] === '{%= prefix %}') {
+    if ( isset( $_GET['page'] ) && $_GET['page'] === '{%= prefix %}' ) {
         wp_enqueue_style(
             'admin-{%= prefix %}-style',
-            plugins_url('css/admin-{%= safe_file_name %}.min.css', __FILE__),
+            plugins_url( 'css/admin-{%= safe_file_name %}.min.css', __FILE__ ),
             array(),
             $this->version,
             'all'
@@ -130,8 +130,8 @@ public function admin_enqueue_scripts()
 
         wp_enqueue_script(
             'admin-{%= prefix %}-script',
-            plugins_url('js/admin-{%= safe_file_name %}.min.js', __FILE__),
-            array('jquery'),
+            plugins_url( 'js/admin-{%= safe_file_name %}.min.js', __FILE__ ),
+            array( 'jquery' ),
             $this->version,
             true
         );
@@ -142,7 +142,7 @@ public function wp_enqueue_scripts()
 {
     wp_enqueue_style(
         '{%= safe_file_name %}-style',
-        plugins_url('css/{%= safe_file_name %}.min.css', __FILE__),
+        plugins_url( 'css/{%= safe_file_name %}.min.css', __FILE__ ),
         array(),
         $this->version,
         'all'
@@ -150,8 +150,8 @@ public function wp_enqueue_scripts()
 
     wp_enqueue_script(
         '{%= safe_file_name %}-script',
-        plugins_url('js/{%= safe_file_name %}.min.js', __FILE__),
-        array('jquery'),
+        plugins_url( 'js/{%= safe_file_name %}.min.js', __FILE__ ),
+        array( 'jquery' ),
         $this->version,
         true
     );
