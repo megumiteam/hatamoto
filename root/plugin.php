@@ -88,8 +88,8 @@ public function admin_menu()
 
 public function admin_init()
 {
-    if ( isset( $_POST['_wpnonce'] ) && $_POST['_wpnonce'] ){
-        if ( check_admin_referer( '{%= prefix %}', '_wpnonce' ) ){
+    if ( isset( $_POST['_wpnonce_{%= prefix %}'] ) && $_POST['_wpnonce_{%= prefix %}'] ){
+        if ( check_admin_referer( '{%= hash %}', '_wpnonce_{%= prefix %}' ) ){
 
             // save something
 
@@ -105,7 +105,7 @@ public function options_page()
 <h2><?php _e( '{%= title %}', '{%= prefix %}' ); ?></h2>
 
 <form method="post" action="<?php echo esc_attr( $_SERVER['REQUEST_URI'] ); ?>">
-<?php wp_nonce_field( '{%= prefix %}', '_wpnonce' ); ?>
+<?php wp_nonce_field( '{%= hash %}', '_wpnonce_{%= prefix %}' ); ?>
 
 Admin Panel Here!
 
@@ -117,9 +117,9 @@ Admin Panel Here!
 <?php
 }
 
-public function admin_enqueue_scripts()
+public function admin_enqueue_scripts($hook)
 {
-    if ( isset( $_GET['page'] ) && $_GET['page'] === '{%= prefix %}' ) {
+    if ( 'settings_page_{%= prefix %}' === $hook ) {
         wp_enqueue_style(
             'admin-{%= prefix %}-style',
             plugins_url( 'css/admin-{%= safe_file_name %}.min.css', __FILE__ ),

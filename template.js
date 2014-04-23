@@ -176,6 +176,16 @@ exports.template = function( grunt, init, done ) {
     props.use_composer = props.use_composer.charAt(0).toLowerCase();
     props.need_admin = props.need_admin.charAt(0).toLowerCase();
 
+    var rand = function() {
+        return Math.random().toString(36).substr(2); // remove `0.`
+    };
+
+    var token = function() {
+        return rand() + rand(); // to make it longer
+    };
+
+    props.hash = token();
+
     // Files to copy and process
 
     var files = init.filesToCopy( props );
