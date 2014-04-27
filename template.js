@@ -53,7 +53,7 @@ exports.template = function( grunt, init, done ) {
             });
             res.on('end', function() {
               try {
-                var ver = JSON.parse(body).offers[0].current.replace(/\.\d+$/, '');
+                var ver = JSON.parse(body).offers[0].current.replace(/^(\d+\.\d+)/, '$1');
                 done(null, ver);
               } catch (e) {
                 done(null, '');
