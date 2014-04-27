@@ -35,11 +35,13 @@ module.exports = function( grunt ) {
     uglify: {
       all: {
         files: {
-          'js/{%= safe_file_name %}.min.js': [
-            'js/{%= safe_file_name %}.js'
-          ],
+          {% if ('y' === need_admin) { %}
           'js/admin-{%= safe_file_name %}.min.js': [
             'js/admin-{%= safe_file_name %}.js'
+          ],
+          {% } %}
+          'js/{%= safe_file_name %}.min.js': [
+            'js/{%= safe_file_name %}.js'
           ]
         },
         options: {
