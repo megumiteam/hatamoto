@@ -93,7 +93,7 @@ public function admin_init()
 
             // save something
 
-            wp_redirect( 'options-general.php?page={%= prefix %}' );
+            wp_safe_redirect( menu_page_url( '{%= prefix %}', false ) );
         }
     }
 }
