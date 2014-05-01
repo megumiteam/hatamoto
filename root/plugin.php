@@ -77,6 +77,7 @@ public function plugins_loaded()
 {% if ( 'y' === need_admin ) { %}
 public function admin_menu()
 {
+    // See http://codex.wordpress.org/Administration_Menus
     add_options_page(
         __( '{%= title %}', '{%= prefix %}' ),
         __( '{%= title %}', '{%= prefix %}' ),
