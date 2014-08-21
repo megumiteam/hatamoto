@@ -217,7 +217,7 @@ exports.template = function( grunt, init, done ) {
         delete files[ 'css/' + props.safe_file_name + '.css' ];
         delete files[ 'css/admin-' + props.safe_file_name + '.less'];
         delete files[ 'css/admin-' + props.safe_file_name + '.css' ];
-        props.devDependencies["grunt-contrib-sass"] = "~0.2.2";
+        props.devDependencies["grunt-contrib-sass"] = "~0.8.0";
         props.css_type = 'sass';
         break;
     }

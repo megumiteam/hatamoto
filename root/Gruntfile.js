@@ -67,7 +67,8 @@ module.exports = function( grunt ) {
     sass:   {
       all: {
         options: {
-          style: 'expanded'
+          style: 'expanded',
+          sourcemap: 'auto'
         },
         files: {
           {% if ('y' === need_admin) { %}'css/admin-{%= safe_file_name %}.css': 'css/admin-{%= safe_file_name %}.scss',{% } %}
